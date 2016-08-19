@@ -8,10 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+
+NSString * wechatSign () {
+    return @"test";
+}
+
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        NSLog(@"Hello, World!");
+        
+        NSString *sign = wechatSign();
+        NSLog(@"%@", sign);
+        
     }
     return 0;
 }
