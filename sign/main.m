@@ -20,17 +20,31 @@ NSString *MD5(NSString *v){
         [output appendFormat:@"%02x", digest[i]];
     return  output;
 }
+
+NSString *genNonceStr() {
+    static int kNumber = 15;
+
+    NSString *sourceStr = @"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    NSMutableString *resultStr = [[NSMutableString alloc] init];
+    srand((unsigned) time(0));
+    for (int i = 0; i < kNumber; i++) {
+        unsigned index = rand() % [sourceStr length];
+        NSString *oneStr = [sourceStr substringWithRange:NSMakeRange(index, 1)];
+        [resultStr appendString:oneStr];
+    }
+    return resultStr;
+}
 NSString * wechatSign () {
-    //TODO noceStr
-    
-    //TODO IP
+    //noceStr
+    NSString *nonceStr = genNonceStr();
+    //IP
     getIP *getip = [[getIP alloc]init];
     NSString *ip = [getip getIPAddress:true];
     //TODO mchId
     payArgument *payargument = [[payArgument alloc]init];
     payargument.appid =             @"wxb4ba3c02aa476ea1";
     payargument.mchId =             @"I am mchId";
-    payargument.nonceStr =          @"I am nonceStr";
+    payargument.nonceStr =          nonceStr;
     payargument.body =              @"腾讯充值中心-QQ会员充值";
     payargument.outTradeNo =        @"0603";
     payargument.totalFee =          888;
@@ -63,6 +77,7 @@ NSString * wechatSign () {
         stringA = [stringA stringByAppendingFormat:@"%@=%@&", categoryId, value];
     }
     stringA = [stringA substringWithRange:NSMakeRange(0, [stringA length]-1)];
+//    NSLog(stringA);
     //MD5 && toUpperCase
     stringA = MD5(stringA);
     stringA = [stringA uppercaseString];
