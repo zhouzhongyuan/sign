@@ -9,39 +9,17 @@
 #import <Foundation/Foundation.h>
 
 @interface payArgument : NSObject
-{
-    NSString * appid;
-    NSString * mchId;
-    NSString * nonceStr;
-    NSString * sign;
-    NSString * body;
-    NSString * outTradeNo;
-    NSInteger  totalFee;
-    NSString * spbillCreateIp;
-    NSString * notifyUrl;
-    NSString * tradeType;
-}
 
--(NSString*) appid;
--(NSString*) mchId;
--(NSString*) nonceStr;
--(NSString*) sign;
--(NSString*) body;
--(NSString*) outTradeNo;
--(NSInteger) totalFee;
--(NSString*) spbillCreateIp;
--(NSString*) notifyUrl;
--(NSString*) tradeType;
+@property NSString *appid;
+@property NSString *mchId;
+@property NSString *nonceStr;
+@property NSString *sign;
+@property NSString *body;
+@property NSString *outTradeNo;
+@property NSInteger totalFee;
+@property NSString *spbillCreateIp;
+@property NSString *notifyUrl;
+@property NSString *tradeType;
 
--(void) setAppid:           (NSString*) appidValue;
--(void) setMchId:           (NSString*) machIdValue;
--(void) setNonceStr:        (NSString*) nonceStrValue;
--(void) setSign:            (NSString*) signValue;
--(void) setBody:            (NSString*) bodyValue;
--(void) setOutTradeNo:      (NSString*) outTradeNoValue;
--(void) setTotalFee:        (NSInteger) totalFeeValue;
--(void) setSpbillCreateIp:   (NSString*) spbillCreateIValuep;
--(void) setNotifyUrl:        (NSString*) notifyUrlValue;
--(void) setTradeType:       (NSString*) tradeTypeValue;
 
 @end
