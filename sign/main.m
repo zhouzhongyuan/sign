@@ -9,6 +9,8 @@
 #import "payArgument.h"
 #import <objc/runtime.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "getIPAddress.h"
+
 NSString *MD5(NSString *v){
     const char *cStr = [v UTF8String];
     unsigned char digest[16];
@@ -19,17 +21,22 @@ NSString *MD5(NSString *v){
     return  output;
 }
 NSString * wechatSign () {
+    //TODO noceStr
+    
+    //TODO IP
+    getIP *getip = [[getIP alloc]init];
+    NSString *ip = [getip getIPAddress:true];
+    //TODO mchId
     payArgument *payargument = [[payArgument alloc]init];
-    payargument.appid =             @"I am appid";
+    payargument.appid =             @"wxb4ba3c02aa476ea1";
     payargument.mchId =             @"I am mchId";
     payargument.nonceStr =          @"I am nonceStr";
-    payargument.sign =              @"I am sign";
-    payargument.body =              @"I am body";
-    payargument.outTradeNo =        @"I am outTradeNo";
+    payargument.body =              @"腾讯充值中心-QQ会员充值";
+    payargument.outTradeNo =        @"0603";
     payargument.totalFee =          888;
-    payargument.spbillCreateIp =    @"I am spbillCreateIp";
-    payargument.notifyUrl =         @"I am notifyUrl";
-    payargument.tradeType =         @"I am tradeType";
+    payargument.spbillCreateIp =    ip;
+    payargument.notifyUrl =         @"http://zhouzhongyuan.com/notiryUrl";
+    payargument.tradeType =         @"APP";
     //去除空值
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     unsigned int outCount, i;
