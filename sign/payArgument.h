@@ -40,8 +40,8 @@
 -(void) setBody:            (NSString*) bodyValue;
 -(void) setOutTradeNo:      (NSString*) outTradeNoValue;
 -(void) setTotalFee:        (NSInteger) totalFeeValue;
--(void) setSpbillCreateI:   (NSString*) spbillCreateIValuep;
--(void) setotifyUrl:        (NSString*) notifyUrlValue;
--(void) settradeType:       (NSString*) tradeTypeValue;
+-(void) setSpbillCreateIp:   (NSString*) spbillCreateIValuep;
+-(void) setNotifyUrl:        (NSString*) notifyUrlValue;
+-(void) setTradeType:       (NSString*) tradeTypeValue;
 
 @end

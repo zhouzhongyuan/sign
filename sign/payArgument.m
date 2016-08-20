@@ -50,15 +50,15 @@
 }
 
 
-- (void)setAppid:        (NSString *)appidValue                 {appid =              appidValue;}
-- (void)setMchId:        (NSString *)machIdValue                {mchId =              machIdValue;}
-- (void)setNonceStr:     (NSString *)nonceStrValue              {nonceStr =           nonceStrValue;}
-- (void)setSign:         (NSString *)signValue                  {sign =               signValue;}
-- (void)setBody:         (NSString *)bodyValue                  {body =               bodyValue;}
-- (void)setOutTradeNo:   (NSString *)outTradeNoValue            {outTradeNo =         outTradeNoValue;}
-- (void)setTotalFee:     (NSString *)totalFeeValue              {totalFee =           totalFeeValue;}
-- (void)setSpbillCreateI:(NSString *)spbillCreateIValuep        {spbillCreateIp =     spbillCreateIValuep;}
-- (void)setotifyUrl:     (NSString *)notifyUrlValue             {notifyUrl =          notifyUrlValue;}
-- (void)settradeType:    (NSString *)tradeTypeValue             {tradeType =          tradeTypeValue;}
+- (void)setAppid:           (NSString *)appidValue                 {appid =              appidValue;}
+- (void)setMchId:           (NSString *)machIdValue                {mchId =              machIdValue;}
+- (void)setNonceStr:        (NSString *)nonceStrValue              {nonceStr =           nonceStrValue;}
+- (void)setSign:            (NSString *)signValue                  {sign =               signValue;}
+- (void)setBody:            (NSString *)bodyValue                  {body =               bodyValue;}
+- (void)setOutTradeNo:      (NSString *)outTradeNoValue            {outTradeNo =         outTradeNoValue;}
+- (void)setTotalFee:        (NSInteger)totalFeeValue               {totalFee =           totalFeeValue;}
+- (void)setSpbillCreateIp:  (NSString *)spbillCreateIValuep        {spbillCreateIp =     spbillCreateIValuep;}
+- (void)setNotifyUrl:        (NSString *)notifyUrlValue             {notifyUrl =          notifyUrlValue;}
+- (void)setTradeType:       (NSString *)tradeTypeValue             {tradeType =          tradeTypeValue;}
 
 @end

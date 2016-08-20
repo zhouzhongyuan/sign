@@ -47,8 +47,21 @@ NSString * wechatSign () {
 
 
     payArgument *payargument = [[payArgument alloc]init];
-    payargument.sign = @"I am sign";
-    payargument.mchId = @"I am mchId";
+    payargument.appid =             @"I am appid";
+    payargument.mchId =             @"I am mchId";
+    payargument.nonceStr =          @"I am nonceStr";
+    payargument.sign =              @"I am sign";
+    payargument.body =              @"I am body";
+    payargument.outTradeNo =        @"I am outTradeNo";
+    payargument.totalFee =          888;
+    payargument.spbillCreateIp =    @"I am spbillCreateIp";
+    payargument.notifyUrl =         @"I am notifyUrl";
+    payargument.tradeType =         @"I am tradeType";
+
+
+
+
+
     return payargument.mchId;
 
 
