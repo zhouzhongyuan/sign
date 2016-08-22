@@ -10,6 +10,9 @@
 #import <objc/runtime.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "getIPAddress.h"
+#import "Order.h"
+#import "DataSigner.h"
+#import "Product.h"
 
 NSString *MD5(NSString *v){
     const char *cStr = [v UTF8String];
@@ -33,6 +36,84 @@ NSString *genNonceStr() {
         [resultStr appendString:oneStr];
     }
     return resultStr;
+}
+NSString * alipaySign(){
+    NSString *partner = @"";
+    NSString *seller = @"";
+//    NSString *privateKey = @"-----BEGIN PRIVATE KEY-----\n"
+//            "MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALxPLDYJUpJNXwXY\n"
+//            "cZIj80mBOUz9rWSe7OeW/WOjhi0AVRFcSoJRAA/R51/UeFOAHxFzLpPjNQhUUP5z\n"
+//            "SVNxkAFvEo71pdoDPzwp0wez3OPTBQ/vuQqNiduXApTL9/BJJl3dDL6pE9mcKsi9\n"
+//            "yKHU3jogEfqvMTEY7wtRkLxfNKchAgMBAAECgYB6/5/aH9a+VylFES6FjVPg5DZA\n"
+//            "UsZKHgCR+K7DwVDn3fqynzzPyAapTqq5jneV2u7wH/MBh/vg1+obecQga+Hp3Zji\n"
+//            "zRG0CrRQihZ9RAdgfys81VxvvUeCfuGdRYbIbwDFbuGZ2QmhyiH/+swTlKgEwTix\n"
+//            "tZ0S3L6Tgjb1+VqFQQJBAPKVxmd1bAEQUNLtjXSnFZ38EHqz2sRSoS6v9q8Dj9Co\n"
+//            "12ItS/C1AvwR/x0Pnz/G1uoA2ZJBh8v5sHa0ks2mgnkCQQDGuQbh+HiabatgnUA/\n"
+//            "H2NY7LkNlr3HV6ekUp3hCAdIAzaGaKBmblu+MnRbAnhfYOCa9uBIzyY/rfE4ONzC\n"
+//            "5V/pAkEA13ElT+T9EsTGw02uf5eUn0ap7A+njwxDkg886pojM5GAF/VaqGBaUjw5\n"
+//            "cjnZmO6jGBfBIx+H1yPeEM62QmZLIQJAAvi5VZ+1jfmd2m//ifIaNjYz/jQG2nhB\n"
+//            "FX/2xGquUTFbG19tJpr33Dw86S98RVDZiveuGuieFc2wEbsn8fIkIQJBAPG9su3o\n"
+//            "E2c1cqDYXrhJc+O8bm2WqmG1jPA4t1kaw1z+Z78zOaw+hWZB+tZtVoYRzoZh57sy\n"
+//            "2DK2rZtAjH3arfM=\n"
+//            "-----END PRIVATE KEY-----";
+    NSString * privateKey = @"MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALxPLDYJUpJNXwXY\n"
+            "cZIj80mBOUz9rWSe7OeW/WOjhi0AVRFcSoJRAA/R51/UeFOAHxFzLpPjNQhUUP5z\n"
+            "SVNxkAFvEo71pdoDPzwp0wez3OPTBQ/vuQqNiduXApTL9/BJJl3dDL6pE9mcKsi9\n"
+            "yKHU3jogEfqvMTEY7wtRkLxfNKchAgMBAAECgYB6/5/aH9a+VylFES6FjVPg5DZA\n"
+            "UsZKHgCR+K7DwVDn3fqynzzPyAapTqq5jneV2u7wH/MBh/vg1+obecQga+Hp3Zji\n"
+            "zRG0CrRQihZ9RAdgfys81VxvvUeCfuGdRYbIbwDFbuGZ2QmhyiH/+swTlKgEwTix\n"
+            "tZ0S3L6Tgjb1+VqFQQJBAPKVxmd1bAEQUNLtjXSnFZ38EHqz2sRSoS6v9q8Dj9Co\n"
+            "12ItS/C1AvwR/x0Pnz/G1uoA2ZJBh8v5sHa0ks2mgnkCQQDGuQbh+HiabatgnUA/\n"
+            "H2NY7LkNlr3HV6ekUp3hCAdIAzaGaKBmblu+MnRbAnhfYOCa9uBIzyY/rfE4ONzC\n"
+            "5V/pAkEA13ElT+T9EsTGw02uf5eUn0ap7A+njwxDkg886pojM5GAF/VaqGBaUjw5\n"
+            "cjnZmO6jGBfBIx+H1yPeEM62QmZLIQJAAvi5VZ+1jfmd2m//ifIaNjYz/jQG2nhB\n"
+            "FX/2xGquUTFbG19tJpr33Dw86S98RVDZiveuGuieFc2wEbsn8fIkIQJBAPG9su3o\n"
+            "E2c1cqDYXrhJc+O8bm2WqmG1jPA4t1kaw1z+Z78zOaw+hWZB+tZtVoYRzoZh57sy\n"
+            "2DK2rZtAjH3arfM=";
+    /*
+     *生成订单信息及签名
+     */
+    //将商品信息赋予AlixPayOrder的成员变量
+    Order *order = [[Order alloc] init];
+    order.partner = partner;
+    order.sellerID = seller;
+
+    //fake product info
+    Product *product = [[Product alloc]init];
+    product.tradeNo = @"订单ID（由商家自行制定）";
+    product.subject = @"商品标题";
+    product.body = @"商品标题";
+    product.price = 888;
+
+    order.outTradeNO = product.tradeNo; //订单ID（由商家自行制定）
+    order.subject = product.subject; //商品标题
+    order.body = product.body; //商品标题
+    order.totalFee = [NSString stringWithFormat:@"%.2f",product.price]; //商品价格
+    order.notifyURL =  @"http://www.xxx.com"; //回调URL
+
+    order.service = @"mobile.securitypay.pay";
+    order.paymentType = @"1";
+    order.inputCharset = @"utf-8";
+    order.itBPay = @"30m";
+    order.showURL = @"m.alipay.com";
+
+
+    //将商品信息拼接成字符串
+    NSString *orderSpec = [order description];
+    NSLog(@"orderSpec = %@",orderSpec);
+
+    //获取私钥并将商户信息签名,外部商户可以根据情况存放私钥和签名,只需要遵循RSA签名规范,并将签名字符串base64编码和UrlEncode
+    id<DataSigner> signer = CreateRSADataSigner(privateKey);
+    NSString *signedString = [signer signString:orderSpec];
+    return signedString;
+    NSLog(signedString);
+    //将签名成功字符串格式化为订单字符串,请严格按照该格式
+    NSString *orderString = nil;
+    if (signedString != nil) {
+        orderString = [NSString stringWithFormat:@"%@&sign=\"%@\"&sign_type=\"%@\"",
+                                                 orderSpec, signedString, @"RSA"];
+    }
+    return @"alipay sign";
 }
 NSString * wechatSign () {
     //noceStr
@@ -86,7 +167,10 @@ NSString * wechatSign () {
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         NSString *sign = wechatSign();
-        NSLog(@"%@", sign);
+        NSString *aliSign = alipaySign();
+        NSLog(@"%@", aliSign);
     }
     return 0;
 }
+
+//TODO 参数名错误
